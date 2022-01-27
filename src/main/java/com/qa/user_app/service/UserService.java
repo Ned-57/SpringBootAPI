@@ -58,8 +58,10 @@ public class UserService {
 
 	public User delete(long id) {
 		if (userRepository.existsById(id)) {
+			User user = userRepository.getById(id);
 			userRepository.deleteById(id);
+			return new User(user.getForename(), user.getSurname(), user.getAge());
 		}
-		return null;
+		throw new EntityNotFoundException("User with id " + id + " not found");
 	}
 }
